@@ -34,6 +34,9 @@ class Checkout(models.Model):
         group_expand='_group_expand_stage_id')
     state = fields.Selection(related='stage_id.state')
 
+    checkout_date = fields.Date(readonly=True)
+    close_date = fields.Date(readonly=True)
+
 
     @api.onchange('member_id')
     def onchange_member_id(self):
@@ -46,6 +49,21 @@ class Checkout(models.Model):
                     'message': 'Request date changed to today.'
                 }
             }
+
+    @api.model
+    def create(self, vals):
+        # Code before create: should use the 'vals' dict
+        if 'stage_id' in vals:
+            Stage = self.env['library.checkout.stage']
+            new_state = Stage.browse(vals['stage_id']).state
+            if new_state == 'open':
+                vals['checkout_date'] = fields.Date.today()
+        new_record = super().create(vals)
+        # Code after create: can use the 'new_record' created
+        if new_record.state == 'done':
+            raise exceptions.UserError(
+                'Not allowed to create a checkout in the done state.')
+        return new_record
 
 
 class CheckoutLine(models.Model):
