@@ -21,6 +21,7 @@ def default_get(self, field_names):
 
 @api.multi
 def button_send(self):
+    import pudb; pu.db
     self.ensure_one()
 
     if not self.checkout_ids:
@@ -37,10 +38,10 @@ def button_send(self):
             subtype='mail.mt_comment',
             )
 
-    _logger.debug(
-        'Message on %d to followers: %s',
-        checkout.id,
-        checkout.message_follower_ids)
+        _logger.debug(
+            'Message on %d to followers: %s',
+            checkout.id,
+            checkout.message_follower_ids)
 
     _logger.info(
         'Posted %d messages to Checkouts: %s',
