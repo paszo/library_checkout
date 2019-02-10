@@ -11,7 +11,7 @@
     </field>
   </record>
 
-  <record id="view_form_checout" model="ir.ui.view">
+  <record id="view_form_checkout" model="ir.ui.view">
     <field name="name">Checkout Form</field>
     <field name="model">library.checkout</field>
     <field name="arch" type="xml">
