@@ -6,5 +6,6 @@
  'security/ir.model.access.csv',
  'views/library_menu.xml',
  'views/checkout_view.xml',
+ 'data/library_checkout_stage.xml',
  ]
 }
