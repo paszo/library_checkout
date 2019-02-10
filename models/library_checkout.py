@@ -4,7 +4,7 @@ class Checkout(models.Model):
     _name = 'library.checkout'
     _description = 'Checkout Request'
     member_id = fields.Many2one(
-        'library_member',
+        'library.member',
         required=True)
     user_id = fields.Many2one(
         'res.users',
