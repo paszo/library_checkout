@@ -65,6 +65,20 @@ class Checkout(models.Model):
                 'Not allowed to create a checkout in the done state.')
         return new_record
 
+    @api.multi
+    def write(self, vals):
+        # Code before write: can use 'slef', with the old values
+        if 'stage_id' in vals:
+            Stage = self.env['library.checkout.stage']
+            new_state = Stage.browse(vals['stage_id']).state
+            if new_state == 'open' and self.state != 'open':
+                vals['checkout_date'] = fields.Date.today()
+            if new_state == 'done' and self.state != 'done':
+                vals['close_date'] = fields.Date.today()
+        super().write(vals)
+        # Code after write: can use 'self', with the updated values
+        return True
+
 
 class CheckoutLine(models.Model):
     _name = 'library.checkout.line'
