@@ -22,6 +22,14 @@ def default_get(self, field_names):
 @api.multi
 def button_send(self):
     self.ensure_one()
+
+    if not self.checkout_ids:
+        raise exceptions.UserError(
+            'Select at least one Checkout to send messages to.')
+    if not self.message_body:
+        raise exceptions.UserError(
+            'Write a message body to send.')
+
     for checkout in self.checkout_ids:
         checkout.message_post(
             body=self.message_body,
@@ -39,5 +47,5 @@ def button_send(self):
         len(self.checkout_ids),
         str(self.checkout_ids),
     )
-    
+
     return True
