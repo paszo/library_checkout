@@ -3,6 +3,7 @@ from odoo import api, exceptions, fields, models
 class Checkout(models.Model):
     _name = 'library.checkout'
     _description = 'Checkout Request'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     @api.model
     def _default_stage(self):

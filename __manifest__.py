@@ -1,7 +1,7 @@
 {'name': 'Library Book Borrowing',
  'description': 'Members can book the books from the library.',
  'author': 'Daniel Reis',
- 'depends': ['library_member'],
+ 'depends': ['library_member', 'mail'],
  'data': [
  'security/ir.model.access.csv',
  'views/library_menu.xml',
